@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+label{
+  margin-right: 5px;
+}
+.vertical-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}

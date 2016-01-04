@@ -6,11 +6,42 @@
 
   window.BaseObject = (function() {
     function BaseObject() {
+      this.points = [];
       this.triangles = [];
       this.settings = new BaseSettings();
     }
 
     return BaseObject;
+
+  })();
+
+  window.Point = (function() {
+    function Point(x, y, z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+    }
+
+    Point.prototype.is_same = function(point) {
+      return point.x === this.x && point.y === this.y && point.z === this.z;
+    };
+
+    return Point;
+
+  })();
+
+  window.Triangle = (function() {
+    function Triangle(p1, p2, p3) {
+      this.p1 = p1;
+      this.p2 = p2;
+      this.p3 = p3;
+    }
+
+    Triangle.prototype.is_same = function(triangle) {
+      return triangle.p1 === this.p1 && triangle.p2 === this.p2 && triangle.p3 === this.p3;
+    };
+
+    return Triangle;
 
   })();
 

@@ -2,7 +2,8 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/js/output.js" />
+        <item url="file://$PROJECT_DIR$/js/objects/cube.js" />
+        <item url="file://$PROJECT_DIR$/js/settings/front.js" />
         <item url="file://$PROJECT_DIR$/js/app.js" />
         <item url="file://$PROJECT_DIR$/js/settings/base.js" />
         <item url="file://$PROJECT_DIR$/js/objects/base.js" />
@@ -16,6 +17,8 @@
       <root url="file://$PROJECT_DIR$/js/output.js" />
       <root url="file://$PROJECT_DIR$/js/dependencies.js" />
       <root url="file://$PROJECT_DIR$/js/output.js" />
+      <root url="file://$PROJECT_DIR$/js/objects/cube.js" />
+      <root url="file://$PROJECT_DIR$/js/settings/front.js" />
       <root url="file://$PROJECT_DIR$/js/app.js" />
       <root url="file://$PROJECT_DIR$/js/settings/base.js" />
       <root url="file://$PROJECT_DIR$/js/objects/base.js" />
