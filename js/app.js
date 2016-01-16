@@ -4,14 +4,17 @@
 
   canvas = null;
 
+  window.scene = null;
+
   jQuery(document).ready(function() {
-    var cl, ctx;
+    var timer;
     canvas = document.getElementById('my_canvas');
-    cl = new Cube();
-    cl.settings.load_settings();
-    ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#FF0000";
-    return ctx.fillRect(20, 20, 150, 100);
+    window.scene = new Scene(canvas);
+    return timer = setInterval(((function(_this) {
+      return function() {
+        return window.scene.draw_scene();
+      };
+    })(this)), 100);
   });
 
 }).call(this);

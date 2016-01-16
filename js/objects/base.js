@@ -5,21 +5,72 @@
   objects = [];
 
   window.BaseObject = (function() {
-    function BaseObject() {
+    function BaseObject(name) {
+      this.name = name;
       this.points = [];
       this.triangles = [];
-      this.settings = new BaseSettings();
+      this.settings = new BaseObjectSettings(this);
+      this.settings.load_settings();
     }
+
+    BaseObject.prototype.apply_settings = function() {
+      "Returns new points for object, then you can import them to object\nand create triangles from this new Points";
+      var matrix, point;
+      matrix = this.create_matrix();
+      return (function() {
+        var i, len, ref, results;
+        ref = this.points;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          point = ref[i];
+          results.push(this.create_new_point(point, matrix));
+        }
+        return results;
+      }).call(this);
+    };
+
+    BaseObject.prototype.create_matrix = function() {
+      var output, rotate_matrix, scale_matrix, scale_setting, translation_matrix, translation_set;
+      output = math.eye(4);
+      translation_set = this.settings.position;
+      translation_matrix = translation(translation_set.x, translation_set.y, translation_set.z);
+      output = math.multiply(translation_matrix, output);
+      scale_setting = this.settings.scale;
+      scale_matrix = scale(scale_setting.x, scale_setting.y, scale_setting.z);
+      output = math.multiply(scale_matrix, output);
+      rotate_matrix = this.create_rotate_matrix();
+      return math.multiply(output, rotate_matrix);
+    };
+
+    BaseObject.prototype.create_rotate_matrix = function() {
+      var rotate_matrix, rotate_settings, rotate_x_matrix, rotate_y_matrix, rotate_z_matrix;
+      rotate_settings = this.settings.rotate;
+      rotate_matrix = math.eye(4);
+      rotate_x_matrix = rotate_x(rotate_settings.x);
+      rotate_matrix = math.multiply(rotate_matrix, rotate_x_matrix);
+      rotate_y_matrix = rotate_y(rotate_settings.y);
+      rotate_matrix = math.multiply(rotate_matrix, rotate_y_matrix);
+      rotate_z_matrix = rotate_z(rotate_settings.z);
+      return math.multiply(rotate_matrix, rotate_z_matrix);
+    };
+
+    BaseObject.prototype.create_new_point = function(point, matrix) {
+      var matrix_point, ref, x, y, z;
+      matrix_point = create_matrix_point(point);
+      matrix_point = math.multiply(matrix, matrix_point);
+      ref = unpack_matrix_point(matrix_point), x = ref[0], y = ref[1], z = ref[2];
+      return new Point(x, y, z);
+    };
 
     return BaseObject;
 
   })();
 
   window.Point = (function() {
-    function Point(x, y, z) {
-      this.x = x;
-      this.y = y;
-      this.z = z;
+    function Point(x1, y1, z1) {
+      this.x = x1;
+      this.y = y1;
+      this.z = z1;
     }
 
     Point.prototype.is_same = function(point) {

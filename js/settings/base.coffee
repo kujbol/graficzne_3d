@@ -1,24 +1,22 @@
 active_settings = null
+active_object = null
 
 change_settings = () ->
   if active_settings != null
     for setting in active_settings.settings
       setting.update_settings()
-
+    points = active_object.apply_settings()
+    active_object.create_triangles(points)
+    window.scene.add_object(active_object)
 
 class window.BaseSettings
-  constructor: ->
-    @colorful = new CheckBoxSettings('colorful', false)
-    @filled = new CheckBoxSettings('filed', true)
-    @position = new ThreeBoxSettings('position' ,0, 0, 0)
-    @scale = new EditBoxSettings('scale', 1)
-    @rotate = new ThreeBoxSettings('rotate', 0, 0, 0)
-
-    @settings =  [@colorful, @filled, @position, @scale, @rotate]
+  constructor:(@object) ->
+    @settings = []
     @panel = $('#settings_panel')
 
   set_active: ->
     active_settings = @
+    active_object = @object
 
   load_settings: ->
     @clean_settings()
@@ -31,7 +29,7 @@ class window.BaseSettings
     @panel.empty()
 
 
-class BaseBoxSettings
+class window.BaseBoxSettings
   constructor: ->
     @panel = $('#settings_panel')
 
@@ -46,7 +44,7 @@ class window.EditBoxSettings extends BaseBoxSettings
     @edit.onchange = change_settings
 
   update_settings: ->
-    @text = @edit.value
+    @text = parseFloat(@edit.value)
 
 
 class window.CheckBoxSettings extends BaseBoxSettings
@@ -80,7 +78,7 @@ class window.ThreeBoxSettings extends BaseBoxSettings
     @editz.onchange = change_settings
 
   update_settings: ->
-    @x = @editx.value
-    @y = @edity.value
-    @z = @editz.value
+    @x = parseFloat(@editx.value)
+    @y = parseFloat(@edity.value)
+    @z = parseFloat(@editz.value)
 

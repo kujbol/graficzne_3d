@@ -1,17 +1,16 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.dropdown .dropdown-menu {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+
+  max-height: 0;
+  display: block;
+  overflow: hidden;
+  opacity: 0;
 }
 
-a {
-  color: #00B7FF;
-}
-
-label{
-  margin-right: 5px;
-}
-.vertical-center {
-  height: 100%;
-  display: flex;
-  align-items: center;
+.dropdown.open .dropdown-menu {
+  max-height: 300px;
+  opacity: 1;
 }

@@ -2,16 +2,30 @@ doctype html
 html
     head
         title=Graficzne_3d
-        link(rel='stylesheet', src='/css/style.css')
+        style
+            include  css/style.css
+
         link(href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css', rel='stylesheet')
         script(src='http://code.jquery.com/jquery-1.8.0.js')
         script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
 
         // Pretty fucked up scripts loading
+        script(src='js/lib/math.js')
+        script(src='js/lib/3d.js')
 
         script(src='js/settings/base.js')
+        script(src='js/settings/object.js')
+
         script(src='js/objects/base.js')
         script(src='js/objects/cube.js')
+
+        script(src='js/draw/camera.js')
+        script(src='js/draw/drawer.js')
+
+
+        script(src='js/objects/scene.js')
+
+        script(src='js/layout/main.js')
         script(src='js/app.js')
 
     body
@@ -32,11 +46,11 @@ html
                             a(href='#', type='button', id='action 2') Action 2
                         li.dropdown
                             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                                | More Actions
+                                | Add Object
                                 span.caret
                             ul.dropdown-menu
                                 li
-                                    a(href='#') Action
+                                    a(onclick="add_object(Cube)") Cube
                                 li
                                     a(href='#') Another action
                                 li
