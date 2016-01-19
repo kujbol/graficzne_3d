@@ -1,84 +1,68 @@
-active_settings = null
-active_object = null
-
-change_settings = () ->
-  if active_settings != null
-    for setting in active_settings.settings
-      setting.update_settings()
-    points = active_object.apply_settings()
-    active_object.create_triangles(points)
-    window.scene.add_object(active_object)
+change_settings = (event) ->
+  if event.data != null
+    setting = event.data
+    setting.update_settings()
+    setting.object.apply_settings()
+    window.scene.draw_scene()
 
 class window.BaseSettings
   constructor:(@object) ->
     @settings = []
     @panel = $('#settings_panel')
 
-  set_active: ->
-    active_settings = @
-    active_object = @object
-
   load_settings: ->
     @clean_settings()
-    @set_active()
     for setting in @settings
       setting.load_settings()
 
   clean_settings: ->
-    active_settings = null
     @panel.empty()
 
 
-class window.BaseBoxSettings
-  constructor: ->
-    @panel = $('#settings_panel')
-
-
-class window.EditBoxSettings extends BaseBoxSettings
-  constructor: (@name, @text) ->
-    super()
+class window.EditBoxSettings
+  constructor: (@object, @panel, @name, @text) ->
 
   load_settings: ->
-    @panel.append("<p><label for='#{@name}'>#{@name}: <input type='text' value=#{@text} id='#{@name}'/></label></p>")
-    @edit = document.getElementById(@name)
-    @edit.onchange = change_settings
+    @panel.append("<li><p><label for='#{@name}'>#{@name}: <input type='text' value=#{@text} id='#{@name}'/></label></p></li>")
+    @edit = $("\##{@name}")
+    @edit.change(this, change_settings)
 
   update_settings: ->
     @text = parseFloat(@edit.value)
 
 
-class window.CheckBoxSettings extends BaseBoxSettings
-  constructor: (@name, @value) ->
-    super()
+class window.CheckBoxSettings
+  constructor: (@object, @panel, @name, @value) ->
 
   load_settings: ->
     if @value == true
       checked = 'checked="checked"'
     else
       checked = ''
-    @panel.append("<p><label for='#{@name}'>#{@name}: <input type='checkbox' id='#{@name}' #{checked}/></label></p>")
-    @edit = document.getElementById(@name)
-    @edit.onchange = change_settings
+    @panel.append("<li><p><label for='#{@name}'>#{@name}: <input type='checkbox' id='#{@name}' #{checked}/></label></p></li>")
+    @edit = $("\##{@name}")
+    @edit.change(this, change_settings)
 
   update_settings: ->
-    @value = @edit.checked
+    if @edit.is(":checked")
+      @value = true
+    else
+      @valie = false
 
 
-class window.ThreeBoxSettings extends BaseBoxSettings
-  constructor: (@name, @x, @y, @z) ->
-    super()
+class window.ThreeBoxSettings
+  constructor: (@object, @panel, @name, @x, @y, @z) ->
 
   load_settings: ->
-    @panel.append("<p><b>#{@name}</b><ul><li><label for='#{@name}x'>#{@name} x: <input type='text' value='#{@x}' id='#{@name}x'/></label></li><li><label for='#{@name}y'>#{@name} y: <input type='text' value='#{@y}' id='#{@name}y'/></label></li><li><label for='#{@name}z'>#{@name} z: <input type='text' value='#{@z}' id='#{@name}z'/></label></li></ul></p>")
-    @editx = document.getElementById("#{@name}x")
-    @editx.onchange = change_settings
-    @edity = document.getElementById("#{@name}y")
-    @edity.onchange = change_settings
-    @editz = document.getElementById("#{@name}z")
-    @editz.onchange = change_settings
-
+    @panel.append("<li><p><b>#{@name}</b><ul><li><label for='#{@name}x'>#{@name} x: <input type='text' value='#{@x}' id='#{@name}x'/></label></li><li><label for='#{@name}y'>#{@name} y: <input type='text' value='#{@y}' id='#{@name}y'/></label></li><li><label for='#{@name}z'>#{@name} z: <input type='text' value='#{@z}' id='#{@name}z'/></label></li></ul></p></li>")
+    @editx = $("\##{@name}x")
+    @editx.change(this, change_settings)
+    @edity = $("\##{@name}y")
+    @edity.change(this, change_settings)
+    @editz = $("\##{@name}z")
+    @editz.change(this, change_settings)
   update_settings: ->
-    @x = parseFloat(@editx.value)
-    @y = parseFloat(@edity.value)
-    @z = parseFloat(@editz.value)
+    @x = parseFloat(@editx.val())
+    @y = parseFloat(@edity.val())
+    @z = parseFloat(@editz.val())
 

@@ -7,14 +7,8 @@
   window.scene = null;
 
   jQuery(document).ready(function() {
-    var timer;
     canvas = document.getElementById('my_canvas');
-    window.scene = new Scene(canvas);
-    return timer = setInterval(((function(_this) {
-      return function() {
-        return window.scene.draw_scene();
-      };
-    })(this)), 100);
+    return window.scene = new Scene(canvas);
   });
 
 }).call(this);

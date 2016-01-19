@@ -15,6 +15,7 @@ html
 
         script(src='js/settings/base.js')
         script(src='js/settings/object.js')
+        script(src='js/settings/camera.js')
 
         script(src='js/objects/base.js')
         script(src='js/objects/cube.js')
@@ -41,7 +42,7 @@ html
                 .collapse.navbar-collapse
                     ul.nav.navbar-nav
                         li
-                            a#action_1(href='#', type='button') Action 1
+                            a#camer_settings_togle(onclick="show_camera_settings()", href='#', type='button') Camera Settings
                         li
                             a(href='#', type='button', id='action 2') Action 2
                         li.dropdown
@@ -50,7 +51,7 @@ html
                                 span.caret
                             ul.dropdown-menu
                                 li
-                                    a(onclick="add_object(Cube)") Cube
+                                    a(onclick="add_object(Cube)", href='#', type='button') Cube
                                 li
                                     a(href='#') Another action
                                 li
@@ -61,14 +62,22 @@ html
                     ul.nav.navbar-nav.navbar-right
                         li
                             a(href='#') Link
+        #wrapper.toggled
+            #sidebar-wrapper
+                #settings_camera
+                ul.sidebar-nav
+                    li.sidebar-brand
+                        a(href='#')
+                            | Camera Settings
 
-        .col-md-10
-            block content
-        .col-md-2
-            .vertical-center
-                .panel.panel-default(style='box-shadow: 5px 5px 2px #888888;')
-                    .panel-heading
-                        h3.panel-title
-                            | Object Settings
-                            span.pull-right
-                    .panel-body#settings_panel
+
+            .col-md-10
+                block content
+            .col-md-2
+                .vertical-center
+                    .panel.panel-default(style='box-shadow: 5px 5px 2px #888888;')
+                        .panel-heading
+                            h3.panel-title
+                                | Object Settings
+                                span.pull-right
+                        .panel-body#settings_panel

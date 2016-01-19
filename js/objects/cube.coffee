@@ -1,12 +1,9 @@
 class window.Cube extends BaseObject
-  constructor: (name, points = null) ->
-    super(name)
+  constructor: (points = null) ->
+    super(@)
 
     if points is null
-      for i in [1,-1]
-        for j in [1, -1]
-          for k in [1, -1]
-            @points.push(new Point(k, j, i))
+      @points = @create_points()
     else
       @points = points
 
@@ -34,3 +31,16 @@ class window.Cube extends BaseObject
       # left
       new Triangle(p1, p5, p3), new Triangle(p7, p5, p3)
     ]
+
+  create_points: () ->
+    it = 0
+    points = []
+    for i in [1,-1]
+      for j in [1, -1]
+        for k in [1, -1]
+          if @points.length > 0
+            points.push(new Point(k, j, i, @points[it].color))
+            it +=1
+          else
+            points.push(new Point(k, j, i))
+    return points

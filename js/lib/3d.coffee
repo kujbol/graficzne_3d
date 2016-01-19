@@ -30,7 +30,7 @@ window.scale = (x, y, z) ->
 window.rotate_x = (fi) ->
   return math.matrix([
     [1,     0,            0,         0],
-    [0, math.cos(fi), -math.sin(fi), 0],
+    [0, math.cos(fi), -1*math.sin(fi), 0],
     [0, math.sin(fi),  math.cos(fi), 0],
     [0,     0,            0,         1]
   ])
@@ -40,14 +40,14 @@ window.rotate_y = (fi) ->
   return math.matrix([
     [math.cos(fi),  0, math.sin(fi), 0],
     [     0,        1,       0,      0],
-    [-math.sin(fi), 0, math.cos(fi), 0],
+    [-1*math.sin(fi), 0, math.cos(fi), 0],
     [     0,        0,       0,      1],
   ])
 
 
 window.rotate_z = (fi) ->
   return math.matrix([
-    [math.cos(fi), -math.sin(fi), 0,  0],
+    [math.cos(fi), -1*math.sin(fi), 0,  0],
     [math.sin(fi),  math.cos(fi), 0,  0],
     [     0,            0,        1,  0],
     [     0,            0,        0,  1],

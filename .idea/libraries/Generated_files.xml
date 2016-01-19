@@ -2,6 +2,8 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/js/layout/main.js" />
+        <item url="file://$PROJECT_DIR$/js/settings/camera.js" />
         <item url="file://$PROJECT_DIR$/js/tests/lib/test_3d.js" />
         <item url="file://$PROJECT_DIR$/js/settings/object.js" />
         <item url="file://$PROJECT_DIR$/js/objects/cube.js" />
@@ -11,7 +13,6 @@
         <item url="file://$PROJECT_DIR$/js/settings/base.js" />
         <item url="file://$PROJECT_DIR$/js/objects/base.js" />
         <item url="file://$PROJECT_DIR$/js/objects/scene.js" />
-        <item url="file://$PROJECT_DIR$/js/objects/view.js" />
         <item url="file://$PROJECT_DIR$/js/draw/camera.js" />
       </sourceFilesUrls>
     </properties>
@@ -30,17 +31,19 @@
       <root url="file://$PROJECT_DIR$/js/draw/shaders.js" />
       <root url="file://$PROJECT_DIR$/js/lib.js" />
       <root url="file://$PROJECT_DIR$/js/lib.js" />
+      <root url="file://$PROJECT_DIR$/js/objects/view.js" />
       <root url="file://$PROJECT_DIR$/js/tests/lib/test_3d.js" />
-      <root url="file://$PROJECT_DIR$/js/settings/object.js" />
       <root url="file://$PROJECT_DIR$/js/objects/cube.js" />
       <root url="file://$PROJECT_DIR$/js/lib/3d.js" />
       <root url="file://$PROJECT_DIR$/js/app.js" />
-      <root url="file://$PROJECT_DIR$/js/draw/drawer.js" />
       <root url="file://$PROJECT_DIR$/js/settings/base.js" />
+      <root url="file://$PROJECT_DIR$/js/draw/camera.js" />
+      <root url="file://$PROJECT_DIR$/js/layout/main.js" />
+      <root url="file://$PROJECT_DIR$/js/settings/camera.js" />
+      <root url="file://$PROJECT_DIR$/js/settings/object.js" />
+      <root url="file://$PROJECT_DIR$/js/draw/drawer.js" />
       <root url="file://$PROJECT_DIR$/js/objects/base.js" />
       <root url="file://$PROJECT_DIR$/js/objects/scene.js" />
-      <root url="file://$PROJECT_DIR$/js/objects/view.js" />
-      <root url="file://$PROJECT_DIR$/js/draw/camera.js" />
     </CLASSES>
     <SOURCES />
   </library>

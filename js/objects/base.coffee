@@ -1,4 +1,5 @@
 objects = []
+colors = ['#404040', '#6A9A1F', '#D43F3F', '#00ACE9']
 
 class window.BaseObject
   constructor: (@name) ->
@@ -9,45 +10,61 @@ class window.BaseObject
 
   apply_settings: () ->
     """
-      Returns new points for object, then you can import them to object
-      and create triangles from this new Points
+      Method used after changing settings of an object, settings are updates
+      and I'm only refreshing view
     """
-    matrix = this.create_matrix()
-    return (
-      this.create_new_point(point, matrix) for point in @points
-    )
+    matrix = @create_matrix()
+    points = @create_points()
+    points =  (@create_new_point(point, matrix) for point in points)
+    @create_triangles(points)
 
-  create_matrix: () ->
-    output = math.eye(4)
-    translation_set = @settings.position
-    translation_matrix = translation(translation_set.x, translation_set.y, translation_set.z)
-    output = math.multiply(translation_matrix, output)
-    scale_setting = @settings.scale
-    scale_matrix = scale(scale_setting.x, scale_setting.y, scale_setting.z)
-    output = math.multiply(scale_matrix, output)
-    rotate_matrix = this.create_rotate_matrix()
-    return math.multiply(output, rotate_matrix)
 
-  create_rotate_matrix: () ->
-    rotate_settings = @settings.rotate
-    rotate_matrix = math.eye(4)
-    rotate_x_matrix = rotate_x(rotate_settings.x)
+  create_matrix: (output=null) ->
+    """
+      Order of multiplying arrays is defined by order in settings array
+      to change order you need to change order in this array
+    """
+    if output is null
+      output = math.eye(4)
+    for setting in @settings.settings
+      if setting.name.indexOf('position') >= 0
+        translation_matrix = translation(setting.x, setting.y, setting.z)
+        output = math.multiply(translation_matrix, output)
+      if setting.name.indexOf('scale') >= 0
+        scale_matrix = scale(setting.x, setting.y, setting.z)
+        output = math.multiply(scale_matrix, output)
+      if setting.name.indexOf('rotate') >= 0
+        rotate_matrix = this.create_rotate_matrix(setting, output)
+        output = math.multiply(output, rotate_matrix)
+    return output
+
+  create_rotate_matrix: (setting, output) ->
+    rotate_matrix = output
+    rotate_x_matrix = rotate_x(setting.x)
     rotate_matrix = math.multiply(rotate_matrix, rotate_x_matrix)
-    rotate_y_matrix = rotate_y(rotate_settings.y)
+    rotate_y_matrix = rotate_y(setting.y)
     rotate_matrix = math.multiply(rotate_matrix, rotate_y_matrix)
-    rotate_z_matrix = rotate_z(rotate_settings.z)
+    rotate_z_matrix = rotate_z(setting.z)
     return math.multiply(rotate_matrix, rotate_z_matrix)
 
   create_new_point: (point, matrix) ->
     matrix_point = create_matrix_point(point)
     matrix_point = math.multiply(matrix, matrix_point)
     [x, y, z] = unpack_matrix_point(matrix_point)
-    return new Point(x, y, z)
+    return new Point(x, y, z, point.color)
 
+  create_triangles: (points=null) ->
+    throw {name : "NotImplementedError", message : "should be overwritten"};
 
+  create_points: () ->
+    throw {name : "NotImplementedError", message : "should be overwritten"};
 
 class window.Point
-  constructor: (@x, @y, @z) ->
+  constructor: (@x, @y, @z, color=null) ->
+    if color
+      @color = color
+    else
+      @color = colors[Math.floor(Math.random() * 4)]
 
   is_same: (point) ->
     point.x == @x and point.y == @y and point.z == @z
