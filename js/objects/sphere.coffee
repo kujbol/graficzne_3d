@@ -26,7 +26,7 @@ class window.Sphere extends BaseObject
     else
       p = ({color:null} for i in [0 .. 12])
 
-    return [
+    points = [
       new Point(-l,  t,  0, p[0].color),
       new Point( l,  t,  0, p[1].color),
       new Point(-l, -t,  0, p[2].color),
@@ -99,10 +99,10 @@ class window.Sphere extends BaseObject
       (p1.y+p2.y)/2,
       (p1.z+p2.z)/2
     )
-#    if is_in_middle
-    length = math.sqrt(middle.x*middle.x+middle.y*middle.y+middle.z*middle.z)
-#    else
-#      length = 1
+    if is_in_middle
+      length = math.sqrt(middle.x*middle.x+middle.y*middle.y+middle.z*middle.z)
+    else
+      length = math.sqrt(middle.x*middle.x+middle.y*middle.y+middle.z*middle.z)
     middle.x /= length
     middle.y /= length
     middle.z /= length
