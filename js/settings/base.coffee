@@ -3,7 +3,8 @@ change_settings = (event) ->
     setting = event.data
     setting.update_settings()
     setting.object.apply_settings()
-    window.scene.draw_scene()
+    scene.draw_scene()
+
 
 class window.BaseSettings
   constructor:(@object) ->
@@ -47,7 +48,7 @@ class window.CheckBoxSettings
     if @edit.is(":checked")
       @value = true
     else
-      @valie = false
+      @value = false
 
 
 class window.ThreeBoxSettings

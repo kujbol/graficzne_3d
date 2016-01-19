@@ -8,7 +8,7 @@
       setting = event.data;
       setting.update_settings();
       setting.object.apply_settings();
-      return window.scene.draw_scene();
+      return scene.draw_scene();
     }
   };
 
@@ -85,7 +85,7 @@
       if (this.edit.is(":checked")) {
         return this.value = true;
       } else {
-        return this.valie = false;
+        return this.value = false;
       }
     };
 
