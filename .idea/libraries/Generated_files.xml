@@ -9,12 +9,12 @@
         <item url="file://$PROJECT_DIR$/js/settings/base.js" />
         <item url="file://$PROJECT_DIR$/js/draw/camera.js" />
         <item url="file://$PROJECT_DIR$/js/layout/main.js" />
-        <item url="file://$PROJECT_DIR$/js/settings/shpere.js" />
+        <item url="file://$PROJECT_DIR$/js/settings/sphere.js" />
         <item url="file://$PROJECT_DIR$/js/settings/camera.js" />
-        <item url="file://$PROJECT_DIR$/js/settings/sphera.js" />
         <item url="file://$PROJECT_DIR$/js/settings/object.js" />
         <item url="file://$PROJECT_DIR$/js/objects/sphere.js" />
         <item url="file://$PROJECT_DIR$/js/draw/drawer.js" />
+        <item url="file://$PROJECT_DIR$/js/layout/save_file.js" />
         <item url="file://$PROJECT_DIR$/js/layout/object_list.js" />
         <item url="file://$PROJECT_DIR$/js/objects/base.js" />
         <item url="file://$PROJECT_DIR$/js/objects/scene.js" />
@@ -37,6 +37,7 @@
       <root url="file://$PROJECT_DIR$/js/lib.js" />
       <root url="file://$PROJECT_DIR$/js/objects/view.js" />
       <root url="file://$PROJECT_DIR$/js/settings/sphera.js" />
+      <root url="file://$PROJECT_DIR$/js/settings/sphera.js" />
       <root url="file://$PROJECT_DIR$/js/tests/lib/test_3d.js" />
       <root url="file://$PROJECT_DIR$/js/objects/cube.js" />
       <root url="file://$PROJECT_DIR$/js/lib/3d.js" />
@@ -46,10 +47,10 @@
       <root url="file://$PROJECT_DIR$/js/layout/main.js" />
       <root url="file://$PROJECT_DIR$/js/settings/sphere.js" />
       <root url="file://$PROJECT_DIR$/js/settings/camera.js" />
-      <root url="file://$PROJECT_DIR$/js/settings/sphera.js" />
       <root url="file://$PROJECT_DIR$/js/settings/object.js" />
       <root url="file://$PROJECT_DIR$/js/objects/sphere.js" />
       <root url="file://$PROJECT_DIR$/js/draw/drawer.js" />
+      <root url="file://$PROJECT_DIR$/js/layout/save_file.js" />
       <root url="file://$PROJECT_DIR$/js/layout/object_list.js" />
       <root url="file://$PROJECT_DIR$/js/objects/base.js" />
       <root url="file://$PROJECT_DIR$/js/objects/scene.js" />

@@ -45,6 +45,7 @@
       this.panel = panel;
       this.name = name;
       this.value = value;
+      this.values = [this.value];
     }
 
     EditBoxSettings.prototype.load_settings = function() {
@@ -67,6 +68,7 @@
       this.panel = panel;
       this.name = name;
       this.value = value;
+      this.values = [this.value];
     }
 
     CheckBoxSettings.prototype.load_settings = function() {
@@ -101,6 +103,7 @@
       this.x = x;
       this.y = y;
       this.z = z;
+      this.values = [this.x, this.y, this.z];
     }
 
     ThreeBoxSettings.prototype.load_settings = function() {

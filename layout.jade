@@ -30,6 +30,7 @@ html
 
         script(src='js/layout/main.js')
         script(src='js/layout/object_list.js')
+        script(src='js/layout/save_file.js')
         script(src='js/app.js')
 
     body
@@ -47,7 +48,10 @@ html
                         li
                             a#camer_settings_togle(onclick="show_camera_settings()", href='#', type='button') Camera Settings
                         li
-                            a(href='#', type='button', id='action 2') Action 2
+                            a#save_button(onclick="save_file()", href='#', type='button') Save File
+                        li
+                            input#upload(type="file")
+                            a#load_scene(onclick="load_file()", href='#', type='button') Load File
                         li.dropdown
                             a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                                 | Add Object
@@ -64,7 +68,7 @@ html
                                     a(href='#') Separated link
                     ul.nav.navbar-nav.navbar-right
                         li
-                            a(href='#') Link
+                            a(href='#') save_file
         #wrapper.toggled
             #sidebar-wrapper
                 #settings_camera

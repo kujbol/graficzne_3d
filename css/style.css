@@ -1,5 +1,9 @@
 .resizedTextbox {width: 100px; height: 20px; padding: 1px}
 
+#upload{
+  display:none
+}
+
 .dropdown .dropdown-menu {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;

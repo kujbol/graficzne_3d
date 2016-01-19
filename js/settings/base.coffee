@@ -22,6 +22,7 @@ class window.BaseSettings
 
 class window.EditBoxSettings
   constructor: (@object, @panel, @name, @value) ->
+    @values= [@value]
 
   load_settings: ->
     @panel.append("<li><p><label for='#{@name}'>#{@name}: <input type='text' value=#{@value} id='#{@name}' class='resizedTextbox'/></label></p></li>")
@@ -34,6 +35,7 @@ class window.EditBoxSettings
 
 class window.CheckBoxSettings
   constructor: (@object, @panel, @name, @value) ->
+    @values= [@value]
 
   load_settings: ->
     if @value == true
@@ -53,6 +55,7 @@ class window.CheckBoxSettings
 
 class window.ThreeBoxSettings
   constructor: (@object, @panel, @name, @x, @y, @z) ->
+    @values = [@x, @y, @z]
 
   load_settings: ->
     @panel.append("<li><p><b>#{@name}</b><ul><li><label for='#{@name}x'>#{@name} x: <input type='text' value='#{@x}' class='resizedTextbox' id='#{@name}x'/></label></li><li><label for='#{@name}y'>#{@name} y: <input type='text' value='#{@y}' class='resizedTextbox' id='#{@name}y'/></label></li><li><label for='#{@name}z'>#{@name} z: <input type='text' value='#{@z}' class='resizedTextbox' id='#{@name}z'/></label></li></ul></p></li>")
