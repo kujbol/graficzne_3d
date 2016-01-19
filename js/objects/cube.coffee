@@ -1,6 +1,9 @@
+object_count = 0
+
 class window.Cube extends BaseObject
   constructor: (points = null) ->
-    super(@)
+    super("Cube_#{object_count}")
+    object_count++
 
     if points is null
       @points = @create_points()
@@ -12,7 +15,6 @@ class window.Cube extends BaseObject
   create_triangles: (new_points = null) ->
     if new_points
       @points = new_points
-
     p = @points
 
     [p0, p1, p2, p3, p4, p5, p6, p7, p8] = [p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7]]

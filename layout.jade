@@ -16,9 +16,11 @@ html
         script(src='js/settings/base.js')
         script(src='js/settings/object.js')
         script(src='js/settings/camera.js')
+        script(src='js/settings/sphere.js')
 
         script(src='js/objects/base.js')
         script(src='js/objects/cube.js')
+        script(src='js/objects/sphere.js')
 
         script(src='js/draw/camera.js')
         script(src='js/draw/drawer.js')
@@ -27,6 +29,7 @@ html
         script(src='js/objects/scene.js')
 
         script(src='js/layout/main.js')
+        script(src='js/layout/object_list.js')
         script(src='js/app.js')
 
     body
@@ -53,7 +56,7 @@ html
                                 li
                                     a(onclick="add_object(Cube)", href='#', type='button') Cube
                                 li
-                                    a(href='#') Another action
+                                    a(onclick="add_object(Sphere)", href='#', type='button') Sphere
                                 li
                                     a(href='#') Something else here
                                 li.divider(role='separator')
@@ -65,19 +68,17 @@ html
         #wrapper.toggled
             #sidebar-wrapper
                 #settings_camera
-                ul.sidebar-nav
-                    li.sidebar-brand
-                        a(href='#')
-                            | Camera Settings
-
 
             .col-md-10
                 block content
             .col-md-2
-                .vertical-center
-                    .panel.panel-default(style='box-shadow: 5px 5px 2px #888888;')
-                        .panel-heading
-                            h3.panel-title
-                                | Object Settings
-                                span.pull-right
-                        .panel-body#settings_panel
+                .panel.panel-default(style='box-shadow: 5px 5px 2px #888888;')
+                    .panel-heading
+                        h3.panel-title
+                            | Object Settings
+                            span.pull-right
+                            select#object_list
+                    .panel-body#settings_panel
+
+
+

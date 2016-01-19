@@ -7,6 +7,8 @@ class window.Scene
   add_object: (obj) ->
     @objects.push(obj)
     @camera.settings.load_settings()
+    window.create_list()
+    @draw_scene()
 
   draw_scene: () ->
     @camera.update_matrix()

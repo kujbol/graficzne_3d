@@ -1,5 +1,7 @@
+eps = 0.0001
+
 objects = []
-colors = ['#404040', '#6A9A1F', '#D43F3F', '#00ACE9']
+colors = [ '#6A9A1F', '#D43F3F', '#00ACE9', '#404040']
 
 class window.BaseObject
   constructor: (@name) ->
@@ -53,7 +55,7 @@ class window.BaseObject
     [x, y, z] = unpack_matrix_point(matrix_point)
     return new Point(x, y, z, point.color)
 
-  create_triangles: (points=null) ->
+  create_triangles: () ->
     throw {name : "NotImplementedError", message : "should be overwritten"};
 
   create_points: () ->
@@ -64,10 +66,25 @@ class window.Point
     if color
       @color = color
     else
-      @color = colors[Math.floor(Math.random() * 4)]
+      @color = @_rgbify(colors[Math.floor(Math.random() * colors.length)])
 
   is_same: (point) ->
-    point.x == @x and point.y == @y and point.z == @z
+    (
+      math.abs(point.x-@x) < eps and
+      math.abs(point.y-@y) < eps and
+      math.abs(point.z-@z) < eps
+    )
+
+  _rgbify: (colr) ->
+    colr = colr.replace /#/, ''
+    if colr.length is 6
+      [
+        parseInt(colr.slice(0,2), 16)
+        parseInt(colr.slice(2,4), 16)
+        parseInt(colr.slice(4,6), 16)
+      ]
+    else
+      [0, 0, 0]
 
 class window.Triangle
   constructor: (@p1, @p2, @p3) ->

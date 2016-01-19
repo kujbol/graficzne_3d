@@ -26,50 +26,44 @@ class window.Drawer
   draw_lines: (object) ->
     for triangle in object.triangles
       triangle = @camera.cast_triangle(triangle)
+      @actual_triangle = triangle
       p1 = @to_screen_metrix(triangle.p1)
       p2 = @to_screen_metrix(triangle.p2)
       p3 = @to_screen_metrix(triangle.p3)
-      @_draw_line(p1, p2)
-      @_draw_line(p2, p3)
-      @_draw_line(p3, p1)
+      @__draw_line(p1.x, p1.y, p2.x, p2.y, true)
+      @__draw_line(p2.x, p2.y, p3.x, p3.y, true)
+      @__draw_line(p3.x, p3.y, p1.x, p1.y, true)
 
   draw_triangles: (object) ->
-#    @ctx.beginPath()
-#    @ctx.moveTo(200,100)
-#    @ctx.lineTo(300,300)
-#    @ctx.lineTo(100,200)
-#    @ctx.fillStyle = '#FFFF00'
-#    @ctx.closePath()
-#    @ctx.fill();
-#    @_draw_triangle(new Triangle(new Point(200,100),new Point(300,300),new Point(100,200)))
     for triangle in object.triangles
       triangle = @camera.cast_triangle(triangle)
       triangle = @triangle_to_screen(triangle)
       @actual_triangle = triangle
       @_draw_triangle(triangle)
 
-  _draw_line: (p1, p2) ->
-    @ctx.beginPath()
-    @ctx.lineWidth = 1
-    @ctx.moveTo(p1.x, p1.y)
-    @ctx.lineTo(p2.x, p2.y)
-    @ctx.stroke()
-
   __draw_line:(x1, y1, x2, y2) ->
     if Math.abs(x2-x1)>= Math.abs(y2-y1)
-      len = Math.abs(x2 - x1)
+      len = Math.abs(x2-x1)
     else
-      len = Math.abs(y2 -y1)
+      len = Math.abs(y2-y1)
 
-    dx = (x2 - x1) / len
-    dy = (y2 - y1) / len
+    dx = (x2-x1)/len
+    dy = (y2-y1)/len
 
-    x = x1 + 0.5 * ( (dx > 0) ? 1 : -1)
-    y = y1 + 0.5 * ( (dy > 0) ? 1 : -1)
+    x=x1+0.5*((dx > 0) ? 1 : -1)
+    y=y1+0.5*((dy > 0) ? 1 : -1)
+    [z, r, g, b] = @_count_z_and_color(x, y)
+    # edges of triagnles
+    @_plot(Math.round(x), Math.round(y),z-5, 0, 0, 0)
+
     for i in [0 .. len]
-      @_plot(Math.round(x), Math.round(y))
+      [z, r, g, b] = @_count_z_and_color(x, y)
+      @_plot(Math.round(x), Math.round(y),z, r, g, b)
       x = x + dx
       y = y + dy
+
+    #edges of triangles
+    @_plot(Math.round(x-dx), Math.round(y-dy),z-5, 0, 0, 0)
 
   _draw_triangle: (triangle) ->
     points = [triangle.p1, triangle.p2, triangle.p3].sort (a, b) ->
@@ -115,10 +109,9 @@ class window.Drawer
       curx2 -= invslope2
       @__draw_line(Math.round(curx1), scanlineY, Math.round(curx2), scanlineY)
 
-  _plot: (x, y) ->
+  _plot: (x, y, z, r, g, b) ->
     if 0 < x < @canvas.width and 0 < y < @canvas.height
-      [z, r, g, b] = @_count_z_and_color(x, y)
-      if @zbuffor[x][y] > z
+      if @zbuffor[x][y] >= z
         @zbuffor[x][y] = z
         @_set(x, y, r, g, b)
 
@@ -130,42 +123,32 @@ class window.Drawer
 
   _count_z_and_color: (x, y) ->
     [p1, p2, p3] = [@actual_triangle.p1, @actual_triangle.p2, @actual_triangle.p3]
-    d1 = @_distance(p1, x, y)
-    d2 = @_distance(p2, x, y)
-    d3 = @_distance(p3, x, y)
+    sum = @_are_of_triangle(p1, p2, p3.x, p3.y)
+    p1_percent = @_are_of_triangle(p2, p3, x, y)
+    p2_percent = @_are_of_triangle(p1, p3, x, y)
+    p3_percent = @_are_of_triangle(p1, p2, x, y)
 
-    sum = d1+d2+d3
-    z = p1.z*(1-d1/sum) + p2.z*(1-d2/sum) + p3.z*(1-d3/sum)
-    if @actual_object.settings.colorful.value is true
-      [r1, g1, b1] = @_rgbify(p1.color)
-      [r2, g2, b2] = @_rgbify(p2.color)
-      [r3, g3, b3] = @_rgbify(p3.color)
-      r = r1*(1-d1/sum) + r2*(1-d2/sum) + r3*(1-d3/sum)
-      g = g1*(1-d1/sum) + g2*(1-d2/sum) + g3*(1-d3/sum)
-      b = b1*(1-d1/sum) + b2*(1-d2/sum) + b3*(1-d3/sum)
-      return [z/2, r, g, b]
+    z = (p1.z*p1_percent+p2.z*p2_percent+p3.z*p3_percent)/sum
+    if @actual_object.settings.colorful.value and @actual_object.settings.simple_color.value is false and @actual_object.settings.filled.value
+      [r1, g1, b1] = p1.color
+      [r2, g2, b2] = p2.color
+      [r3, g3, b3] = p3.color
+      r = (r1*p1_percent+r2*p2_percent+r3*p3_percent)/sum
+      g = (g1*p1_percent+g2*p2_percent+g3*p3_percent)/sum
+      b = (b1*p1_percent+b2*p2_percent+b3*p3_percent)/sum
+      return [z, r, g, b]
+    else if @actual_object.settings.colorful.value and ( @actual_object.settings.simple_color.value or not @actual_object.settings.filled.value)
+      return [z, p1.color[0], p1.color[1], p1.color[2]]
     else
-      return [z/2, 0, 0, 0]
+      return [z, 0, 0, 0]
 
   _clear_buffor: ()->
     for a in [0 .. @canvas.width]
       for b in [0 .. @canvas.height]
         @zbuffor[a][b] = 100000
 
-  _distance: (p1, x, y) ->
-    return math.sqrt((p1.x-x)*(p1.x-x) + (p1.y-y)*(p1.y-y))
-
-  _rgbify: (colr) ->
-    colr = colr.replace /#/, ''
-    if colr.length is 6
-      [
-        parseInt(colr.slice(0,2), 16)
-        parseInt(colr.slice(2,4), 16)
-        parseInt(colr.slice(4,6), 16)
-      ]
-    else
-# just return black
-      [0, 0, 0]
+  _are_of_triangle: (p1, p2, x, y) ->
+    return (1/2) * Math.abs((x-p1.x)*(y-p2.y)-(y-p1.y)*(x-p2.x))
 
   triangle_to_screen: (triangle) ->
     return new Triangle(

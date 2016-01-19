@@ -5,8 +5,8 @@ class window.PerspectiveCamera extends BaseObject
 
     far = 10
     near = 1
-    FOVx = 2
-    FOVy = 2
+    FOVx = math.pi/2
+    FOVy = math.pi/2
 
     fx = 1/math.tan(FOVx/2)
     fy = 1/math.tan(FOVy/2)

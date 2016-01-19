@@ -40,21 +40,21 @@
   })();
 
   window.EditBoxSettings = (function() {
-    function EditBoxSettings(object, panel, name, text) {
+    function EditBoxSettings(object, panel, name, value) {
       this.object = object;
       this.panel = panel;
       this.name = name;
-      this.text = text;
+      this.value = value;
     }
 
     EditBoxSettings.prototype.load_settings = function() {
-      this.panel.append("<li><p><label for='" + this.name + "'>" + this.name + ": <input type='text' value=" + this.text + " id='" + this.name + "'/></label></p></li>");
+      this.panel.append("<li><p><label for='" + this.name + "'>" + this.name + ": <input type='text' value=" + this.value + " id='" + this.name + "' class='resizedTextbox'/></label></p></li>");
       this.edit = $("\#" + this.name);
       return this.edit.change(this, change_settings);
     };
 
     EditBoxSettings.prototype.update_settings = function() {
-      return this.text = parseFloat(this.edit.value);
+      return this.value = parseFloat(this.edit.val());
     };
 
     return EditBoxSettings;
@@ -104,7 +104,7 @@
     }
 
     ThreeBoxSettings.prototype.load_settings = function() {
-      this.panel.append("<li><p><b>" + this.name + "</b><ul><li><label for='" + this.name + "x'>" + this.name + " x: <input type='text' value='" + this.x + "' id='" + this.name + "x'/></label></li><li><label for='" + this.name + "y'>" + this.name + " y: <input type='text' value='" + this.y + "' id='" + this.name + "y'/></label></li><li><label for='" + this.name + "z'>" + this.name + " z: <input type='text' value='" + this.z + "' id='" + this.name + "z'/></label></li></ul></p></li>");
+      this.panel.append("<li><p><b>" + this.name + "</b><ul><li><label for='" + this.name + "x'>" + this.name + " x: <input type='text' value='" + this.x + "' class='resizedTextbox' id='" + this.name + "x'/></label></li><li><label for='" + this.name + "y'>" + this.name + " y: <input type='text' value='" + this.y + "' class='resizedTextbox' id='" + this.name + "y'/></label></li><li><label for='" + this.name + "z'>" + this.name + " z: <input type='text' value='" + this.z + "' class='resizedTextbox' id='" + this.name + "z'/></label></li></ul></p></li>");
       this.editx = $("\#" + this.name + "x");
       this.editx.change(this, change_settings);
       this.edity = $("\#" + this.name + "y");

@@ -21,15 +21,15 @@ class window.BaseSettings
 
 
 class window.EditBoxSettings
-  constructor: (@object, @panel, @name, @text) ->
+  constructor: (@object, @panel, @name, @value) ->
 
   load_settings: ->
-    @panel.append("<li><p><label for='#{@name}'>#{@name}: <input type='text' value=#{@text} id='#{@name}'/></label></p></li>")
+    @panel.append("<li><p><label for='#{@name}'>#{@name}: <input type='text' value=#{@value} id='#{@name}' class='resizedTextbox'/></label></p></li>")
     @edit = $("\##{@name}")
     @edit.change(this, change_settings)
 
   update_settings: ->
-    @text = parseFloat(@edit.value)
+    @value = parseFloat(@edit.val())
 
 
 class window.CheckBoxSettings
@@ -55,13 +55,14 @@ class window.ThreeBoxSettings
   constructor: (@object, @panel, @name, @x, @y, @z) ->
 
   load_settings: ->
-    @panel.append("<li><p><b>#{@name}</b><ul><li><label for='#{@name}x'>#{@name} x: <input type='text' value='#{@x}' id='#{@name}x'/></label></li><li><label for='#{@name}y'>#{@name} y: <input type='text' value='#{@y}' id='#{@name}y'/></label></li><li><label for='#{@name}z'>#{@name} z: <input type='text' value='#{@z}' id='#{@name}z'/></label></li></ul></p></li>")
+    @panel.append("<li><p><b>#{@name}</b><ul><li><label for='#{@name}x'>#{@name} x: <input type='text' value='#{@x}' class='resizedTextbox' id='#{@name}x'/></label></li><li><label for='#{@name}y'>#{@name} y: <input type='text' value='#{@y}' class='resizedTextbox' id='#{@name}y'/></label></li><li><label for='#{@name}z'>#{@name} z: <input type='text' value='#{@z}' class='resizedTextbox' id='#{@name}z'/></label></li></ul></p></li>")
     @editx = $("\##{@name}x")
     @editx.change(this, change_settings)
     @edity = $("\##{@name}y")
     @edity.change(this, change_settings)
     @editz = $("\##{@name}z")
     @editz.change(this, change_settings)
+
   update_settings: ->
     @x = parseFloat(@editx.val())
     @y = parseFloat(@edity.val())
